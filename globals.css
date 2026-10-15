@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Design tokens. Components use the semantic names (bg-surface, text-muted,
+   text-gain ...) so light and dark need no per-component overrides. */
+:root {
+  --bg: #f4f6f9;
+  --surface: #ffffff;
+  --surface-2: #f1f4f8;
+  --line: #e1e6ee;
+  --text: #0f172a;
+  --muted: #5b6678;
+  --accent: #1d4ed8;
+  --accent-soft: #e6eefc;
+  --on-accent: #ffffff;
+  --gain: #0f7b3f;
+  --gain-soft: #e4f5ea;
+  --loss: #c62828;
+  --loss-soft: #fdeaea;
+  --warn: #9a5b00;
+  --warn-soft: #fff3d6;
+  --neutral: #6b7280;
+  --neutral-soft: #eceff3;
+  --ring: #93b4f5;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0a0e16;
+  --surface: #111724;
+  --surface-2: #182032;
+  --line: #253045;
+  --text: #e6eaf2;
+  --muted: #93a0b5;
+  --accent: #6ea4ff;
+  --accent-soft: #17264a;
+  --on-accent: #06122b;
+  --gain: #3ddc84;
+  --gain-soft: #0f2a1c;
+  --loss: #ff7b7b;
+  --loss-soft: #351616;
+  --warn: #ffc857;
+  --warn-soft: #33260a;
+  --neutral: #9aa5b8;
+  --neutral-soft: #1c2434;
+  --ring: #3b6fd6;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+  --color-gain: var(--gain);
+  --color-gain-soft: var(--gain-soft);
+  --color-loss: var(--loss);
+  --color-loss-soft: var(--loss-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-neutral: var(--neutral);
+  --color-neutral-soft: var(--neutral-soft);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-thai), ui-sans-serif, system-ui, "Segoe UI", "Leelawadee UI", Tahoma, sans-serif;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Figures line up in columns */
+.num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 1px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 0.4;
+}
+
+dialog::backdrop {
+  background: rgb(4 8 16 / 0.55);
+}
+
+@keyframes skeleton {
+  0% { opacity: 0.55; }
+  50% { opacity: 1; }
+  100% { opacity: 0.55; }
+}
+.skeleton {
+  background: var(--surface-2);
+  border-radius: 8px;
+  animation: skeleton 1.4s ease-in-out infinite;
+}
+
+@media print {
+  aside, header[data-app-header], [data-no-print] { display: none !important; }
+  body { background: #fff; }
+}
