@@ -1,0 +1,41 @@
+# Runs on every push and pull request. Vercel deploys separately through its
+# GitHub integration; this workflow only checks the code (types, lint, tests,
+# production build). It needs no secrets: tests use an in-memory database and
+# a fake Google Sheets API.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Tests (unit + database + Google Sheets mode)
+        run: npm test
+
+      - name: Production build
+        run: npx next build
